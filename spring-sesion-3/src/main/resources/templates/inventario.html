@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Inventario</title>
+</head>
+<body>
+	<form
+		th:action="${type} == 'N' ? @{/save-new-inventario} : @{/save-edit-inventario}"
+		th:object="${inventario}" method="post">
+		<div>
+			<label for="txtnroInventario">N°</label> <input type="text"
+				id="txtnroInventario" readonly th:field="*{nroInventario}">
+		</div>
+
+		<div>
+			<label for="txtFecha">Fecha</label> <input type="date" id="txtFecha"
+				autofocus th:field="*{fecha}" th:readonly="${type.equals('V')}">
+		</div>
+
+		<div>
+			<label for="txtCosto">Costo de Ingreso</label> <input type="number"
+				id="txtCosto" readonly th:field="*{costoIngreso}"
+				th:readonly="${type.equals('V')}">
+		</div>
+
+		<div>
+			<button type="submit" th:if="${type != 'V'}">Grabar</button>
+			<a th:href="@{/inventario-list}">Cancelar</a>
+		</div>
+	</form>
+
+</body>
+</html>

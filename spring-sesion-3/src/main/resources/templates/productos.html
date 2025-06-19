@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Productos</title>
+</head>
+<body>
+	<form
+		th:action="${type} == 'N' ? @{/save-new-productos} : @{/save-edit-productos}"
+		th:object="${productos}" method="post">
+		<div>
+			<label for="txtId">Id</label><input
+				type="text" id="txtId" readonly
+				th:field="*{idProd}">
+		</div>
+
+		<div>
+			<label for="txtname">Nombre</label> <input type="text" id="txtname"
+				autofocus th:field="*{nomProd}" th:readonly="${type.equals('V')}">
+		</div>
+
+		<div>
+			<label for="txtStockActual">Stock Actual</label> <input type="number"
+				id="txtStockActual" readonly th:field="*{stockActual}"
+				th:readonly="${type.equals('V')}">
+		</div>
+
+		<div>
+			<button type="submit" th:if="${type != 'V'}">Grabar</button>
+			<a th:href="@{/productos-list}">Cancelar</a>
+		</div>
+	</form>
+</body>
+</html>

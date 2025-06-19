@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Categorías</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+	<div class="container w-75 mt-5">
+		<table class="table table-striped table-hover table-bordered table-sm table-responsive caption-top">
+			<caption><h1>Listado de Categorías</h1></caption>
+			<thead>
+				<tr>
+					<th>Código</th>
+					<th>Descripción</th>
+					<th>Frecuencia Compra</th>
+					<th>Acciones</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="categoria : ${categoriaList}">
+					<td th:text="${categoria.idCate}"></td>
+					<td th:text="${categoria.descripcion}"></td>
+					<td th:text="${categoria.frecuenciaCompra}"></td>
+					<td>
+						<a th:href="@{/edit-categoria/{id}(id=${categoria.idCate})}" class="btn btn-primary mr-2">Editar</a>
+						<a th:href="@{/view-categoria/{id}(id=${categoria.idCate})}" class="btn btn-warning mr-2">Ver</a>
+						<a th:href="@{/remove-categoria/{id}(id=${categoria.idCate})}" class="btn btn-danger">Eliminar</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<a th:href="@{/new-categoria}" class="btn btn-success">Nueva Categoria</a>
+	</div>
+</body>
+</html>
