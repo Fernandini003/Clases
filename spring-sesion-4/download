@@ -1,0 +1,160 @@
+CREATE DATABASE  IF NOT EXISTS `tienda_db` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `tienda_db`;
+-- MySQL dump 10.13  Distrib 8.0.40, for Win64 (x86_64)
+--
+-- Host: localhost    Database: tienda_db
+-- ------------------------------------------------------
+-- Server version	8.0.40
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `categoria`
+--
+
+DROP TABLE IF EXISTS `categoria`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `categoria` (
+  `frecuencia_compra` int DEFAULT NULL,
+  `id_cate` int NOT NULL AUTO_INCREMENT,
+  `descripcion` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id_cate`)
+) ENGINE=InnoDB AUTO_INCREMENT=105 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `categoria`
+--
+
+LOCK TABLES `categoria` WRITE;
+/*!40000 ALTER TABLE `categoria` DISABLE KEYS */;
+INSERT INTO `categoria` VALUES (30,6,'Food - Snacks'),(4,8,'Food - Beverages'),(20,9,'Food - Produce'),(25,10,'Beauty'),(9,11,'Furniture'),(21,12,'Clothing - Activewear'),(20,16,'Food - Breakfast'),(17,23,'Toys'),(3,26,'Pets'),(28,27,'Clothing - Tops'),(22,29,'Food - Prepared Meals'),(24,31,'Clothing - Accessories'),(27,32,'Food - Sauces'),(9,35,'Food - Nuts'),(21,36,'Home'),(3,37,'Audio'),(15,39,'Garden'),(15,42,'Clothing'),(11,44,'Food - Condiments'),(25,45,'Fitness'),(3,47,'Outdoor'),(25,48,'Food - Meat'),(5,49,'Food - Seafood'),(14,55,'Food - Dairy'),(15,56,'Art Supplies'),(4,60,'Food - Cooking Oils'),(24,63,'Food - Frozen'),(16,64,'Health'),(7,65,'Food - Canned Goods'),(28,68,'Food - Deli'),(11,70,'Gaming'),(28,71,'Kitchen'),(19,74,'Food - Oils & Vinegars'),(2,80,'Automotive'),(19,81,'Travel'),(19,82,'Food - Cereal'),(28,83,'Food - Spices'),(16,86,'Clothing - Footwear'),(25,88,'Electronics'),(16,90,'Computers'),(13,93,'Food - Frozen Meals'),(17,97,'Food - Prepared Foods'),(13,98,'Food - Dips'),(6,99,'Smart Home'),(1,102,'Sports');
+/*!40000 ALTER TABLE `categoria` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cliente`
+--
+
+DROP TABLE IF EXISTS `cliente`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `cliente` (
+  `id_cliente` int NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(100) NOT NULL,
+  `tipo_documento` int NOT NULL,
+  `nro_documento` varchar(25) NOT NULL,
+  PRIMARY KEY (`id_cliente`),
+  KEY `fk_cliente_documento_idx` (`tipo_documento`),
+  CONSTRAINT `fk_cliente_documento` FOREIGN KEY (`tipo_documento`) REFERENCES `tipo_documento` (`tipo_documento`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cliente`
+--
+
+LOCK TABLES `cliente` WRITE;
+/*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
+INSERT INTO `cliente` VALUES (2,'JUILO REBATTA',1,'41577321'),(3,'JUAN POZO',1,'07585963'),(4,'MARIA ATANACIO',1,'21969120'),(5,'ANGEL FERNANDEZ',2,'79465119165116216');
+/*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `inventario`
+--
+
+DROP TABLE IF EXISTS `inventario`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `inventario` (
+  `costo_ingreso` double DEFAULT NULL,
+  `nro_inventario` int NOT NULL AUTO_INCREMENT,
+  `producto_id_prod` int DEFAULT NULL,
+  `fecha` datetime(6) DEFAULT NULL,
+  PRIMARY KEY (`nro_inventario`),
+  KEY `FK6plntjjlkbshuyn6pcrj9qqye` (`producto_id_prod`),
+  CONSTRAINT `FK6plntjjlkbshuyn6pcrj9qqye` FOREIGN KEY (`producto_id_prod`) REFERENCES `productos` (`id_prod`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `inventario`
+--
+
+LOCK TABLES `inventario` WRITE;
+/*!40000 ALTER TABLE `inventario` DISABLE KEYS */;
+/*!40000 ALTER TABLE `inventario` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `productos`
+--
+
+DROP TABLE IF EXISTS `productos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `productos` (
+  `categoria_id_cate` int DEFAULT NULL,
+  `id_prod` int NOT NULL AUTO_INCREMENT,
+  `stock_actual` int DEFAULT NULL,
+  `nom_prod` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id_prod`),
+  KEY `FKp1ff929108a800lp879y5eqyk` (`categoria_id_cate`),
+  CONSTRAINT `FKp1ff929108a800lp879y5eqyk` FOREIGN KEY (`categoria_id_cate`) REFERENCES `categoria` (`id_cate`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `productos`
+--
+
+LOCK TABLES `productos` WRITE;
+/*!40000 ALTER TABLE `productos` DISABLE KEYS */;
+/*!40000 ALTER TABLE `productos` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tipo_documento`
+--
+
+DROP TABLE IF EXISTS `tipo_documento`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `tipo_documento` (
+  `tipo_documento` int NOT NULL AUTO_INCREMENT,
+  `descripcion` varchar(10) NOT NULL,
+  PRIMARY KEY (`tipo_documento`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tipo_documento`
+--
+
+LOCK TABLES `tipo_documento` WRITE;
+/*!40000 ALTER TABLE `tipo_documento` DISABLE KEYS */;
+INSERT INTO `tipo_documento` VALUES (1,'DNI'),(2,'Carnet'),(3,'Pasaporte'),(4,'RUC');
+/*!40000 ALTER TABLE `tipo_documento` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2025-06-19 10:42:10
